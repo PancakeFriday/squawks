@@ -1,9 +1,8 @@
 #include "Squawks.h"
+logger Log(LOGFILE);
+Globals globals;
 
-#define WIN_WIDTH 1024
-#define WIN_HEIGHT 678
-
-Squawks::Squawks()
+Squawks::Squawks() : mRunning(true)
 {
 
 }
@@ -13,26 +12,68 @@ Squawks::~Squawks()
 
 }
 
+void test()
+{
+	cout << "test" << endl;
+}
+
+void test2()
+{
+	cout << "test2" << endl;
+}
+
 int Squawks::init()
 {
-	bool running = true;
-	sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Test");
-	window.setFramerateLimit(60);
+	Log(Level::Info) << "Starting Engine";
 
-	while(running)
+	globals.getWindow()->setFramerateLimit(60);
+
+	mGameState = make_shared<GameState>("Menu");
+
+	mMainMenu.create(Menu::Options::FULLSCREEN);
+
+	return EXIT_SUCCESS;
+}
+
+void Squawks::run()
+{
+	while(mRunning)
 	{
-		if (window.hasFocus())
+		if (globals.getWindow()->hasFocus())
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				running = false;
+				mRunning = false;
 			}
 		}
 
-		// Clear screen
-		window.clear();
-		// Update the window
-		window.display();
-	}
+		update();
+		render();
 
+	}
+}
+
+void Squawks::close()
+{
+
+}
+
+void Squawks::update()
+{
+	globals.pollEvents();
+	int dt = mDeltaClock.restart().asMilliseconds();
+	mGameState->update(dt);
+
+	//mMainMenu.update(dt);
+}
+
+void Squawks::render()
+{
+		// Clear screen
+		globals.getWindow()->clear();
+
+		mMainMenu.render();
+
+		// Update the window
+		globals.getWindow()->display();
 }

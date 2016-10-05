@@ -1,6 +1,9 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+#include "Globals.h"
+#include "Logger.h"
+
 using namespace std;
 
 class Menu
@@ -20,9 +23,9 @@ class Menu
 		void setBackground(string file);
 
 	private:
-		Options mOptions;
+		int mOptions;
 
-		//sf::Texture mBackgroundTexture;
-		//sf::Sprite mBackgroundSprite;
+		sf::Texture mBackgroundTexture;
+		sf::Sprite mBackgroundSprite;
 
 };

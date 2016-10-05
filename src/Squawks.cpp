@@ -55,7 +55,7 @@ void Squawks::run()
 
 void Squawks::close()
 {
-
+	Log(Level::Info) << "Stopping Engine";
 }
 
 void Squawks::update()
@@ -64,7 +64,7 @@ void Squawks::update()
 	int dt = mDeltaClock.restart().asMilliseconds();
 	mGameState->update(dt);
 
-	//mMainMenu.update(dt);
+	mMainMenu.update(dt);
 }
 
 void Squawks::render()

@@ -12,21 +12,24 @@ Menu::~Menu()
 
 void Menu::create(int options)
 {
-
+	mOptions = options;
 }
 
 void Menu::setBackground(string file)
 {
-	//mBackgroundTexture.loadFromFile(file);
-	//mBackgroundSprite.setTexture(mBackgroundTexture);
+	mBackgroundTexture.loadFromFile(file);
+	mBackgroundSprite.setTexture(mBackgroundTexture);
 }
 
-void update(int dt)
+void Menu::update(int dt)
 {
 
 }
 
-void render()
+void Menu::render()
 {
-	//globals.getWindow()->draw(mBackgroundSprite);
+	if(mBackgroundSprite.getTexture() != NULL)
+	{
+		globals.getWindow()->draw(mBackgroundSprite);
+	}
 }

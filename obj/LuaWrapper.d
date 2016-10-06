@@ -1,6 +1,5 @@
-obj/main.o: src/main.cpp src/Globals.h src/Squawks.h src/Logger.h \
-  src/GameState.h src/Button.h src/Collider.h src/Menu.h \
-  src/LuaWrapper.h src/include/selene.h src/include/selene/State.h \
+obj/LuaWrapper.o: src/LuaWrapper.cpp src/LuaWrapper.h \
+  src/include/selene.h src/include/selene/State.h \
   src/include/selene/ExceptionHandler.h src/include/selene/primitives.h \
   src/include/selene/ExceptionTypes.h src/include/selene/traits.h \
   src/include/selene/MetatableRegistry.h src/include/selene/Registry.h \
@@ -11,4 +10,4 @@ obj/main.o: src/main.cpp src/Globals.h src/Squawks.h src/Logger.h \
   src/include/selene/Ctor.h src/include/selene/Dtor.h \
   src/include/selene/Fun.h src/include/selene/Obj.h \
   src/include/selene/ObjFun.h src/include/selene/Selector.h \
-  src/include/selene/Tuple.h
+  src/include/selene/Tuple.h src/Logger.h

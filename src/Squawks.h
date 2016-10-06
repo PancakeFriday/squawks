@@ -6,6 +6,7 @@
 #include "GameState.h"
 #include "Button.h"
 #include "Menu.h"
+#include "LuaWrapper.h"
 
 using namespace std;
 
@@ -29,5 +30,5 @@ class Squawks
 		shared_ptr<GameState> mGameState;
 
 		/* Here goes the menus and eventually the game */
-		Menu mMainMenu;
+		LuaWrapper mMainMenu;
 };

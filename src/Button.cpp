@@ -27,7 +27,7 @@ Button::~Button()
 
 // Some collision code to check if the mouse is in the button
 // Then do hover and click actions
-void Button::update(float dt)
+void Button::update(int dt)
 {
 	Collider<sf::FloatRect, sf::Vector2i> buttonCollider(mSprite.getGlobalBounds(), sf::Mouse::getPosition(*globals.getWindow()));
 
@@ -69,9 +69,14 @@ void Button::render()
 	globals.getWindow()->draw(mSprite);
 }
 
-void Button::setPosition(sf::Vector2f pos)
+//void Button::setPosition(sf::Vector2f pos)
+//{
+	//mSprite.setPosition(pos);
+//}
+
+void Button::setPosition(float x, float y)
 {
-	mSprite.setPosition(pos);
+	mSprite.setPosition(x,y);
 }
 
 void Button::setAction(function<void()> action)

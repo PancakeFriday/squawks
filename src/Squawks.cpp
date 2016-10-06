@@ -31,7 +31,6 @@ int Squawks::init()
 	mGameState = make_shared<GameState>("Menu");
 
 	mMainMenu.load("lua/MainMenu.lua");
-	Log() << int(mMainMenu.getState()[0]["Button1"]);
 
 	return EXIT_SUCCESS;
 }
@@ -63,12 +62,16 @@ void Squawks::update()
 	globals.pollEvents();
 	int dt = mDeltaClock.restart().asMilliseconds();
 	mGameState->update(dt);
+
+	mMainMenu.update(dt);
 }
 
 void Squawks::render()
 {
 		// Clear screen
 		globals.getWindow()->clear();
+
+		mMainMenu.render();
 
 		// Update the window
 		globals.getWindow()->display();

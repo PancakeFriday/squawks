@@ -1,7 +1,8 @@
 #include <string>
 
-#include "include/selene.h"
+#include "include/sol.hpp"
 #include "Logger.h"
+#include "Button.h"
 
 using namespace std;
 
@@ -12,7 +13,10 @@ class LuaWrapper
 		~LuaWrapper();
 
 		void load(string file);
-		sel::State* getState();
+		sol::state* getState();
+
+		void update(int dt);
+		void render();
 	private:
-		sel::State mState;
+		sol::state mState;
 };

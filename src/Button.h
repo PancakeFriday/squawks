@@ -16,10 +16,11 @@ class Button
 		Button(string imgfile);
 		~Button();
 
-		void update(float dt);
+		void update(int dt);
 		void render();
 
-		void setPosition(sf::Vector2f pos);
+		//void setPosition(sf::Vector2f pos);
+		void setPosition(float x, float y);
 		void setAction(function<void()> action);
 
 	private:

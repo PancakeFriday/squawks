@@ -14,7 +14,6 @@ Button::Button(string imgfile) : mOnPress([&](){})
 	// first row: idle, second row: hover, third row: press
 	int height = mTexture.getSize().y;
 	int width = mTexture.getSize().x;
-	cout << height << " " << width << endl;
 	mSprite.setTextureRect(sf::IntRect(0,0,width,height/3));
 
 	mState = IDLE;

@@ -3,6 +3,9 @@
 #include "include/sol.hpp"
 #include "Logger.h"
 #include "Button.h"
+#include "SpriteWrapper.h"
+#include "Animator.h"
+#include "Transition.h"
 
 using namespace std;
 

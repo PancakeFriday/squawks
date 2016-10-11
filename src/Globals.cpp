@@ -1,7 +1,7 @@
 #include "Globals.h"
 
 #define WIN_WIDTH 1024
-#define WIN_HEIGHT 678
+#define WIN_HEIGHT 640
 
 // IMPLEMENT READING CONFIG
 

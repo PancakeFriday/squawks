@@ -56,7 +56,12 @@ function update(dt)
 	if Goomba:get_position().x < 0 or Goomba:get_position().x > 816 then
 		GoombaDir = GoombaDir * -1
 	end
-	Goomba:move(GoombaDir*0.09*dt,0)
+
+	if isKeyDown("Right") then
+		Goomba:move(1*0.19*dt,0)
+	elseif isKeyDown("Left") then
+		Goomba:move(-1*0.19*dt,0)
+	end
 	Goomba:animate("walking")
 
 	for i,v in pairs(questionblockT) do

@@ -75,6 +75,7 @@ void LuaWrapper::load(string file)
 			sol::constructors<sol::types<string>>(),
 			"render", &Transition::render,
 			"update", &Transition::update,
+			"finished", &Transition::finished,
 			"set_speed", &Transition::setSpeed
 			);
 

@@ -17,8 +17,12 @@ wait = false
 trans = nil
 
 function push_me()
+	print("blubb")
+end
+
+function exit_action()
 	trans = Transition.new("fadeOut")
-	trans:set_speed(0.1)
+	trans:set_speed(0.3)
 end
 
 function init()
@@ -32,7 +36,7 @@ function init()
 
 	ExitB = Button.new('img/MainMenu/Exit.png')
 	ExitB:set_position(200,300)
-	ExitB:set_action(exit)
+	ExitB:set_action(exit_action)
 
 	BackgroundSprite = Sprite.new('img/MainMenu/background.png')
 	BackgroundSprite:scale_to(1024, 640)
@@ -63,6 +67,10 @@ end
 function update(dt)
 	if trans then
 		trans:update(dt)
+
+		if trans:finished() then
+			exit()
+		end
 
 		return
 	end

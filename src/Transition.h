@@ -16,6 +16,7 @@ namespace TransitionEffect
 			virtual void update(int dt) = 0;
 			virtual void render() = 0;
 			virtual void setSpeed(float speed) { mSpeed = speed; }
+			virtual bool finished() = 0;
 		protected:
 			float mSpeed;
 	};
@@ -26,13 +27,15 @@ namespace TransitionEffect
 			FadeOut();
 			~FadeOut();
 
-		private:
 			void update(int dt);
 			void render();
+			bool finished();
 
+		private:
 			sf::Texture mBackgroundTex;
 			sf::Sprite mBackground;
 			int mBlack;
+			bool mIsFinished;
 	};
 };
 
@@ -44,7 +47,10 @@ class Transition
 
 		void update(int dt);
 		void render();
+
+		bool finished();
 		void setSpeed(float speed);
+
 	private:
 		shared_ptr<TransitionEffect::Base> mEffect;
 };

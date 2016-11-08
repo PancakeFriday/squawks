@@ -21,6 +21,11 @@ void Transition::render()
 	mEffect->render();
 }
 
+bool Transition::finished()
+{
+	return mEffect->finished();
+}
+
 void Transition::setSpeed(float speed)
 {
 	mEffect->setSpeed(speed);
@@ -28,7 +33,7 @@ void Transition::setSpeed(float speed)
 
 namespace TransitionEffect
 {
-	FadeOut::FadeOut() : mBlack(255)
+	FadeOut::FadeOut() : mBlack(255), mIsFinished(false)
 	{
 		sf::Vector2u windowSize = globals.getWindow()->getSize();
 		mBackgroundTex.create(windowSize.x, windowSize.y);
@@ -44,16 +49,25 @@ namespace TransitionEffect
 
 	void FadeOut::update(int dt)
 	{
-		Log() << mSpeed;
+		if(mSpeed < 0)
+			mSpeed *= -1;
 		if(mBlack-dt > 0)
 			mBlack -= mSpeed*dt;
 		else
+		{
 			mBlack = 0;
+			mIsFinished = true;
+		}
 	}
 
 	void FadeOut::render()
 	{
 		globals.getWindow()->draw(mBackground);
 		mBackground.setColor(sf::Color(mBlack, mBlack, mBlack, 255));
+	}
+
+	bool FadeOut::finished()
+	{
+		return mIsFinished;
 	}
 }

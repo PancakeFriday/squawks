@@ -2,7 +2,7 @@
 logger Log(LOGFILE);
 Globals globals;
 
-Squawks::Squawks() : mRunning(true)
+Squawks::Squawks()
 {
 
 }
@@ -10,16 +10,6 @@ Squawks::Squawks() : mRunning(true)
 Squawks::~Squawks()
 {
 
-}
-
-void test()
-{
-	cout << "test" << endl;
-}
-
-void test2()
-{
-	cout << "test2" << endl;
 }
 
 int Squawks::init()
@@ -30,22 +20,41 @@ int Squawks::init()
 
 	mGameState = make_shared<GameState>("Menu");
 
-	mMainMenu.load("lua/MainMenu.lua");
+  mLuaStates["mainmenu"] = make_shared<LuaWrapper>();
+  mLuaStates["mainmenu"]->load("lua/MainMenu.lua");
 
 	return EXIT_SUCCESS;
 }
 
 void Squawks::run()
 {
-	while(mRunning)
+	while(globals.mRunning)
 	{
+		//Log() << mLuaStates.size();
+		for (auto it = mLuaStates.cbegin(); it != mLuaStates.cend(); )
+		{
+			if((it->second->getMode() & LuaWrapper::Mode::RUNNING) == 0)
+			{
+				mLuaStates.erase(it++);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		// Close when escape is pressed
 		if (globals.getWindow()->hasFocus())
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				mRunning = false;
+				globals.mRunning = false;
 			}
 		}
+
+		// Close when there are no lua scripts running
+		if(mLuaStates.size() == 0)
+			globals.mRunning = false;
 
 		update();
 		render();
@@ -63,16 +72,18 @@ void Squawks::update()
 	int dt = mDeltaClock.restart().asMilliseconds();
 	mGameState->update(dt);
 
-	mMainMenu.update(dt);
+	for(auto &it : mLuaStates)
+		it.second->update(dt);
 }
 
 void Squawks::render()
 {
-		// Clear screen
-		globals.getWindow()->clear();
+	// Clear screen
+	globals.getWindow()->clear();
 
-		mMainMenu.render();
+	for(auto &it : mLuaStates)
+		it.second->render();
 
-		// Update the window
-		globals.getWindow()->display();
+	// Update the window
+	globals.getWindow()->display();
 }

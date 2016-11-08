@@ -12,6 +12,12 @@ using namespace std;
 class LuaWrapper
 {
 	public:
+		enum Mode {
+			RUNNING = 1,
+			PAUSE = 2,
+			STOPPED = 4,
+		};
+
 		LuaWrapper();
 		~LuaWrapper();
 
@@ -20,6 +26,8 @@ class LuaWrapper
 
 		void update(int dt);
 		void render();
+		int getMode();
 	private:
 		sol::state mState;
+		int mMode;
 };

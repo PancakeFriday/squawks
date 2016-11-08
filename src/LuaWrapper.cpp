@@ -1,7 +1,7 @@
 #include "LuaWrapper.h"
 
 // first argument in constructor of state loads std lua library
-LuaWrapper::LuaWrapper()
+LuaWrapper::LuaWrapper() : mMode(Mode::PAUSE)
 {
 
 }
@@ -15,6 +15,8 @@ void LuaWrapper::load(string file)
 {
 	mState.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table);
 	mState.script_file(file);
+
+	mState.set_function("exit", [&](){ mMode = Mode::STOPPED; });
 
 	/* Bind all relevant classes here */
 	mState.new_usertype<Button>("Button",
@@ -70,7 +72,10 @@ void LuaWrapper::load(string file)
 			);
 
 	mState.new_usertype<Transition>("Transition",
-			sol::constructors<sol::types<>>()
+			sol::constructors<sol::types<string>>(),
+			"render", &Transition::render,
+			"update", &Transition::update,
+			"set_speed", &Transition::setSpeed
 			);
 
 	mState["isKeyDown"] = [](string key)
@@ -89,7 +94,10 @@ void LuaWrapper::load(string file)
 
 	// Careful, the function is not yet called in the if statement!
 	if(mState["init"] != sol::nil)
+	{
 		mState["init"]();
+		mMode = Mode::RUNNING;
+	}
 }
 
 // call the state with yourluawrapper.getState()[0]["stuff"]
@@ -99,12 +107,21 @@ sol::state* LuaWrapper::getState()
 }
 void LuaWrapper::update(int dt)
 {
-	if(mState["update"] != sol::nil)
+	if(mState["update"] != sol::nil && (mMode & Mode::STOPPED) == 0)
+	{
 		mState["update"](dt);
+	}
 }
 
 void LuaWrapper::render()
 {
-	if(mState["render"] != sol::nil)
+	if(mState["render"] != sol::nil && (mMode & Mode::STOPPED) == 0)
+	{
 		mState["render"]();
+	}
+}
+
+int LuaWrapper::getMode()
+{
+	return mMode;
 }

@@ -6,20 +6,33 @@ questionblock = 0
 questionblockT = {}
 GoombaDir = -1
 
-SomeButton = 0
+StartGameB = 0
+SettingsB = 0
+ExitB = 0
 
 time = 0
 time2 = 0
 wait = false
 
+trans = nil
+
 function push_me()
-	print("push_me")
+	trans = Transition.new("fadeOut")
+	trans:set_speed(0.1)
 end
 
 function init()
-	SomeButton = Button.new('img/SomeButton.png')
-	SomeButton:set_position(200,100)
-	SomeButton:set_action(push_me)
+	StartGameB = Button.new('img/MainMenu/StartGame.png')
+	StartGameB:set_position(200,100)
+	StartGameB:set_action(push_me)
+
+	SettingsB = Button.new('img/MainMenu/Settings.png')
+	SettingsB:set_position(200,200)
+	SettingsB:set_action(push_me)
+
+	ExitB = Button.new('img/MainMenu/Exit.png')
+	ExitB:set_position(200,300)
+	ExitB:set_action(exit)
 
 	BackgroundSprite = Sprite.new('img/MainMenu/background.png')
 	BackgroundSprite:scale_to(1024, 640)
@@ -48,10 +61,18 @@ function init()
 end
 
 function update(dt)
+	if trans then
+		trans:update(dt)
+
+		return
+	end
+
 	time = time + dt
 	time2 = time2 + dt
 
-	SomeButton:update(dt)
+	StartGameB:update(dt)
+	SettingsB:update(dt)
+	ExitB:update(dt)
 
 	if Goomba:get_position().x < 0 or Goomba:get_position().x > 816 then
 		GoombaDir = GoombaDir * -1
@@ -70,6 +91,12 @@ function update(dt)
 end
 
 function render()
+	if trans then
+		trans:render()
+
+		return
+	end
+
 	BackgroundSprite:render()
 	Goomba:render()
 
@@ -77,5 +104,7 @@ function render()
 		v:render()
 	end
 
-	SomeButton:render()
+	StartGameB:render()
+	SettingsB:render()
+	ExitB:render()
 end

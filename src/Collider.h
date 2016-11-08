@@ -2,8 +2,6 @@
 #include "Logger.h"
 
 template <typename T, typename U>
-//typedef int T;
-//typedef int U;
 class Collider
 {
 	public:

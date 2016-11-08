@@ -5,7 +5,7 @@
 
 // IMPLEMENT READING CONFIG
 
-Globals::Globals() : mWindow(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Test")
+Globals::Globals() : mWindow(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Test", sf::Style::Close | sf::Style::Titlebar), mRunning(true)
 {
 
 }

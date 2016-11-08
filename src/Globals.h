@@ -20,6 +20,8 @@ class Globals
 		void pollEvents();
 		vector<int> getEvents();
 
+		bool mRunning;
+
 	private:
 		sf::RenderWindow mWindow;
 		vector<int> mEvents;

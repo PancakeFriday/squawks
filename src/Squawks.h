@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -25,10 +26,9 @@ class Squawks
 
 	private:
 		sf::Clock mDeltaClock;
-		bool mRunning;
 
 		shared_ptr<GameState> mGameState;
 
 		/* Here goes the menus and eventually the game */
-		LuaWrapper mMainMenu;
+    map<string, shared_ptr<LuaWrapper>> mLuaStates;
 };
